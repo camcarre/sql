@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-const dbPath = path.resolve(__dirname, '/Users/camcam/Documents/taffpro/sql/sql/back/employees.db');
+const dbPath = path.resolve(__dirname, 'employees.db');
 console.log('Chemin absolu de la base de données:', dbPath);
 
 const db = new sqlite3.Database(dbPath, (err) => {
