@@ -7,53 +7,230 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #007bff;
+            padding: 10px;
+        }
+        .navbar button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .navbar button:hover {
+            background-color: #0056b3;
+        }
+        .navbar .back-button {
+            color: #dc3545;
+        }
+        .navbar .back-button:hover {
+            background-color: #c82333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .table-container {
+            width: 100%;
+            max-width: 98%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Ajouter une marge entre la navbar et le contenu */
+            overflow-x: auto; /* Ajouter un défilement horizontal si nécessaire */
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            display: none; /* Masquer les tables par défaut */
         }
         th, td {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: left;
+            white-space: nowrap; /* Empêcher le texte de déborder */
         }
         th {
             background-color: #f4f4f4;
         }
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
-    <h1>Liste des employés</h1>
-    <table id="employeesTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>Département</th>
-                <th>Titre</th>
-                <th>Date d'embauche</th>
-                <th>Salaire</th>
-                <th>Adresse</th>
-                <th>Date de naissance</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="navbar">
+        <button onclick="showTable('employeesTable')">Employés</button>
+        <button onclick="showTable('departmentsTable')">Départements</button>
+        <button onclick="showTable('titlesTable')">Titres</button>
+        <button onclick="showTable('attendanceTable')">Présence</button>
+        <button onclick="showTable('performanceReviewsTable')">Évaluations de performance</button>
+        <button onclick="showTable('benefitsTable')">Bénéfices</button>
+        <button onclick="showTable('employeeBenefitsTable')">Bénéfices des employés</button>
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+    <div class="container">
+        <div class="table-container">
+            <table id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Département</th>
+                        <th>Titre</th>
+                        <th>Date d'embauche</th>
+                        <th>Salaire</th>
+                        <th>Adresse</th>
+                        <th>Date de naissance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="departmentsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du département</th>
+                        <th>ID du manager</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="titlesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du titre</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID de l'employé</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Heure d'arrivée</th>
+                        <th>Heure de départ</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="performanceReviewsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID de l'employé</th>
+                        <th>Date de l'évaluation</th>
+                        <th>ID de l'évaluateur</th>
+                        <th>Note</th>
+                        <th>Commentaires</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="benefitsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du bénéfice</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="employeeBenefitsTable">
+                <thead>
+                    <tr>
+                        <th>ID de l'employé</th>
+                        <th>ID du bénéfice</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
+        function showTable(tableId) {
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => table.style.display = 'none');
+
+            if (tableId) {
+                document.getElementById(tableId).style.display = 'table';
+            }
+        }
+
+        function deleteRow(apiEndpoint, id) {
+            fetch(`${apiEndpoint}/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Donnée supprimée avec succès!');
+                    location.reload();
+                } else {
+                    alert('Erreur lors de la suppression de la donnée.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression de la donnée.');
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             fetch('/api/employees')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     const tableBody = document.querySelector('#employeesTable tbody');
                     data.forEach(employee => {
@@ -70,13 +247,120 @@
                             <td>${employee.salary}</td>
                             <td>${employee.address}</td>
                             <td>${employee.date_of_birth}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/employees', ${employee.employee_id})">Supprimer</button></td>
                         `;
                         tableBody.appendChild(row);
                     });
                 })
-                .catch(error => {
-                    console.error('Erreur lors de la récupération des données:', error);
-                });
+                .catch(error => console.error('Erreur lors de la récupération des données des employés:', error));
+
+            fetch('/api/departments')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#departmentsTable tbody');
+                    data.forEach(department => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${department.departmentId}</td>
+                            <td>${department.department_name}</td>
+                            <td>${department.manager_id}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/departments', ${department.departmentId})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données des départements:', error));
+
+            fetch('/api/titles')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#titlesTable tbody');
+                    data.forEach(title => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${title.title_id}</td>
+                            <td>${title.title_name}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/titles', ${title.title_id})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données des titres:', error));
+
+            fetch('/api/attendance')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#attendanceTable tbody');
+                    data.forEach(attendance => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${attendance.attendance_id}</td>
+                            <td>${attendance.employee_id}</td>
+                            <td>${attendance.date}</td>
+                            <td>${attendance.status}</td>
+                            <td>${attendance.clock_in_time}</td>
+                            <td>${attendance.clock_out_time}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/attendance', ${attendance.attendance_id})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données de présence:', error));
+
+            fetch('/api/performance_reviews')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#performanceReviewsTable tbody');
+                    data.forEach(review => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${review.review_id}</td>
+                            <td>${review.employee_id}</td>
+                            <td>${review.review_date}</td>
+                            <td>${review.reviewer_id}</td>
+                            <td>${review.rating}</td>
+                            <td>${review.comments}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/performance_reviews', ${review.review_id})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données des évaluations de performance:', error));
+
+            fetch('/api/benefits')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#benefitsTable tbody');
+                    data.forEach(benefit => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${benefit.benefit_id}</td>
+                            <td>${benefit.benefit_name}</td>
+                            <td>${benefit.description}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/benefits', ${benefit.benefit_id})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données des bénéfices:', error));
+
+            fetch('/api/employee_benefits')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#employeeBenefitsTable tbody');
+                    data.forEach(employeeBenefit => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employeeBenefit.employee_id}</td>
+                            <td>${employeeBenefit.benefit_id}</td>
+                            <td>${employeeBenefit.start_date}</td>
+                            <td>${employeeBenefit.end_date}</td>
+                            <td><button class="delete-button" onclick="deleteRow('/api/employee_benefits', ${employeeBenefit.employee_id}, ${employeeBenefit.benefit_id})">Supprimer</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données des bénéfices des employés:', error));
         });
     </script>
 </body>
