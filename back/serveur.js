@@ -20,6 +20,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 app.use(express.static(path.join(__dirname, '../front')));
 app.use(bodyParser.json());
 
+// get
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'index.html'));
 });
@@ -126,6 +127,8 @@ app.get('/api/employee_benefits', (req, res) => {
     });
 });
 
+// delete
+
 app.delete('/api/employees/:id', (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM employees WHERE employee_id = ?';
@@ -209,6 +212,74 @@ app.delete('/api/employee_benefits/:employee_id/:benefit_id', (req, res) => {
         res.json({ message: 'Bénéfice de l\'employé supprimé avec succès!', changes: this.changes });
     });
 });
+
+// post 
+app.post('/api/employees', (req, res) => {
+    const { lastName, firstName, email, phone_number, departmentId, title_id, hire_date, salary, address, date_of_birth } = req.body;
+    const sql = `INSERT INTO employees (lastName, firstName, email, phone_number, departmentId, title_id, hire_date, salary, address, date_of_birth)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.run(sql, [lastName, firstName, email, phone_number, departmentId, title_id, hire_date, salary, address, date_of_birth], function(err) {
+        if (err) {
+            return res.status(400).json({ error: err.message });
+        }
+        res.json({ message: 'Employé ajouté avec succès!', id: this.lastID });
+    });
+});
+
+app.post('/api/departments', (req, res) => {
+    const { department_name, manager_id } = req.body;
+    const sql = `INSERT INTO departments (department_name, manager_id) VALUES (?, ?)`;
+
+    db.run(sql, [department_name, manager_id], function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.status(201).json({ message: 'Department added successfully!', id: this.lastID });
+    });
+});
+
+app.post('/api/titles', (req, res) => {
+    const { title_name } = req.body;
+    const sql = `INSERT INTO titles (title_name) VALUES (?)`;
+
+    db.run(sql, [title_name], function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.status(201).json({ message: 'Title added successfully!', id: this.lastID });
+    });
+});
+
+app.post('/api/benefits', (req, res) => {
+    const { benefit_name, description } = req.body;
+    const sql = `INSERT INTO benefits (benefit_name, description) VALUES (?, ?)`;
+
+    db.run(sql, [benefit_name, description], function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.status(201).json({ message: 'Benefit added successfully!', id: this.lastID });
+    });
+});
+
+app.post('/api/performance_reviews', (req, res) => {
+    const { employee_id, review_date, reviewer_id, rating, comments } = req.body;
+    const sql = `INSERT INTO performance_reviews (employee_id, review_date, reviewer_id, rating, comments) 
+                 VALUES (?, ?, ?, ?, ?)`;
+
+    db.run(sql, [employee_id, review_date, reviewer_id, rating, comments], function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.status(201).json({ message: 'Performance review added successfully!', id: this.lastID });
+    });
+});
+
+// serve
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
