@@ -3,80 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bddview.css">
     <title>Vue BDD</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
 </head>
 <body>
-    <h1>Liste des employés</h1>
-    <table id="employeesTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>Département</th>
-                <th>Titre</th>
-                <th>Date d'embauche</th>
-                <th>Salaire</th>
-                <th>Adresse</th>
-                <th>Date de naissance</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="navbar">
+        <button onclick="showCategory('employeesTable', 'searchEmployees', '/api/employees')">Employés</button>
+        <button onclick="showCategory('departmentsTable', 'searchDepartments', '/api/departments')">Départements</button>
+        <button onclick="showCategory('titlesTable', 'searchTitles', '/api/titles')">Titres</button>
+        <button onclick="showCategory('attendanceTable', 'searchAttendance', '/api/attendance')">Présence</button>
+        <button onclick="showCategory('performanceReviewsTable', 'searchPerformanceReviews', '/api/performance_reviews')">Évaluations de performance</button>
+        <button onclick="showCategory('benefitsTable', 'searchBenefits', '/api/benefits')">Bénéfices</button>
+        <button onclick="showCategory('employeeBenefitsTable', 'searchEmployeeBenefits', '/api/employee_benefits')">Bénéfices des employés</button>
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <div class="container">
+        <div class="table-container">
+            <!-- employees -->
+            <div class="search-container" id="searchEmployees">
+                <input type="text" onkeyup="filterTable('employeesTable', 'searchEmployees')" placeholder="Rechercher dans les employés...">
+            </div>
+            <table id="employeesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Département</th>
+                        <th>Titre</th>
+                        <th>Date d'embauche</th>
+                        <th>Salaire</th>
+                        <th>Adresse</th>
+                        <th>Date de naissance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- employee data -->
+                </tbody>
+            </table>
+
+            <!-- departments -->
+            <div class="search-container" id="searchDepartments">
+                <input type="text" onkeyup="filterTable('departmentsTable', 'searchDepartments')" placeholder="Rechercher dans les départements...">
+            </div>
+            <table id="departmentsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du département</th>
+                        <th>ID du manager</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- department data -->
+                </tbody>
+            </table>
+
+            <!-- titres -->
+            <div class="search-container" id="searchTitles">
+                <input type="text" onkeyup="filterTable('titlesTable', 'searchTitles')" placeholder="Rechercher dans les titres...">
+            </div>
+            <table id="titlesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du titre</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- titles data -->
+                </tbody>
+            </table>
+
+            <!-- présence -->
+            <div class="search-container" id="searchAttendance">
+                <input type="text" onkeyup="filterTable('attendanceTable', 'searchAttendance')" placeholder="Rechercher dans la présence...">
+            </div>
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID de l'employé</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Heure d'arrivée</th>
+                        <th>Heure de départ</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- attendance data -->
+                </tbody>
+            </table>
+
+            <!-- évaluations de performance -->
+            <div class="search-container" id="searchPerformanceReviews">
+                <input type="text" onkeyup="filterTable('performanceReviewsTable', 'searchPerformanceReviews')" placeholder="Rechercher dans les évaluations...">
+            </div>
+            <table id="performanceReviewsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID de l'employé</th>
+                        <th>Date de l'évaluation</th>
+                        <th>ID de l'évaluateur</th>
+                        <th>Note</th>
+                        <th>Commentaires</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- performance reviews data -->
+                </tbody>
+            </table>
+
+            <!-- bénéfices -->
+            <div class="search-container" id="searchBenefits">
+                <input type="text" onkeyup="filterTable('benefitsTable', 'searchBenefits')" placeholder="Rechercher dans les bénéfices...">
+            </div>
+            <table id="benefitsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du bénéfice</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- benefits data -->
+                </tbody>
+            </table>
+
+            <!-- bénéfices des employés -->
+            <div class="search-container" id="searchEmployeeBenefits">
+                <input type="text" onkeyup="filterTable('employeeBenefitsTable', 'searchEmployeeBenefits')" placeholder="Rechercher dans les bénéfices des employés...">
+            </div>
+            <table id="employeeBenefitsTable">
+                <thead>
+                    <tr>
+                        <th>ID de l'employé</th>
+                        <th>ID du bénéfice</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- employee benefits data -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- js script pour affichage -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/api/employees')
+        function showCategory(tableId, searchId, apiEndpoint) {
+            const tables = document.querySelectorAll('table');
+            const searchBars = document.querySelectorAll('.search-container');
+
+            tables.forEach(table => table.style.display = 'none');
+            searchBars.forEach(searchBar => searchBar.style.display = 'none');
+
+            document.getElementById(tableId).style.display = 'table';
+            document.getElementById(searchId).style.display = 'flex';
+
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            tableBody.innerHTML = '';
+
+            // fetch data
+            fetch(apiEndpoint)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     return response.json();
                 })
                 .then(data => {
-                    const tableBody = document.querySelector('#employeesTable tbody');
-                    data.forEach(employee => {
+                    data.forEach(item => {
                         const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${employee.employee_id}</td>
-                            <td>${employee.lastName}</td>
-                            <td>${employee.firstName}</td>
-                            <td>${employee.email}</td>
-                            <td>${employee.phone_number}</td>
-                            <td>${employee.departmentId}</td>
-                            <td>${employee.title_id}</td>
-                            <td>${employee.hire_date}</td>
-                            <td>${employee.salary}</td>
-                            <td>${employee.address}</td>
-                            <td>${employee.date_of_birth}</td>
-                        `;
+                        if (tableId === 'employeesTable') {
+                            row.innerHTML = `
+                                <td>${item.employee_id}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.email}</td>
+                                <td>${item.phone_number}</td>
+                                <td>${item.departmentId}</td>
+                                <td>${item.title_id}</td>
+                                <td>${item.hire_date}</td>
+                                <td>${item.salary}</td>
+                                <td>${item.address}</td>
+                                <td>${item.date_of_birth}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/employees', ${item.employee_id})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'departmentsTable') {
+                            row.innerHTML = `
+                                <td>${item.departmentId}</td>
+                                <td>${item.department_name}</td>
+                                <td>${item.manager_id}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/departments', ${item.departmentId})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'titlesTable') {
+                            row.innerHTML = `
+                                <td>${item.title_id}</td>
+                                <td>${item.title_name}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/titles', ${item.title_id})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'attendanceTable') {
+                            row.innerHTML = `
+                                <td>${item.attendance_id}</td>
+                                <td>${item.employee_id}</td>
+                                <td>${item.date}</td>
+                                <td>${item.status}</td>
+                                <td>${item.clock_in_time}</td>
+                                <td>${item.clock_out_time}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/attendance', ${item.attendance_id})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'performanceReviewsTable') {
+                            row.innerHTML = `
+                                <td>${item.review_id}</td>
+                                <td>${item.employee_id}</td>
+                                <td>${item.review_date}</td>
+                                <td>${item.reviewer_id}</td>
+                                <td>${item.rating}</td>
+                                <td>${item.comments}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/performance_reviews', ${item.review_id})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'benefitsTable') {
+                            row.innerHTML = `
+                                <td>${item.benefit_id}</td>
+                                <td>${item.benefit_name}</td>
+                                <td>${item.description}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/benefits', ${item.benefit_id})">Supprimer</button></td>
+                            `;
+                        } else if (tableId === 'employeeBenefitsTable') {
+                            row.innerHTML = `
+                                <td>${item.employee_id}</td>
+                                <td>${item.benefit_id}</td>
+                                <td>${item.start_date}</td>
+                                <td>${item.end_date}</td>
+                                <td><button class="delete-button" onclick="deleteRow('/api/employee_benefits', ${item.employee_id}, ${item.benefit_id})">Supprimer</button></td>
+                            `;
+                        }
                         tableBody.appendChild(row);
                     });
                 })
                 .catch(error => {
                     console.error('Erreur lors de la récupération des données:', error);
+                    alert('Erreur lors de la récupération des données. Veuillez réessayer.');
                 });
+        }
+
+        // filter table
+        function filterTable(tableId, searchInputId) {
+            const input = document.getElementById(searchInputId).querySelector('input');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { 
+                let found = false;
+                const cells = rows[i].getElementsByTagName('td');
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().includes(filter)) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        // delete from backend
+        function deleteRow(apiEndpoint, id1, id2 = null) {
+            let url = '';
+            if (id2 !== null) {
+                url = `${apiEndpoint}/${id1}/${id2}`;
+            } else {
+                url = `${apiEndpoint}/${id1}`;
+            }
+
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cette donnée?')) {
+                return;
+            }
+
+            fetch(url, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Donnée supprimée avec succès!');
+                        const table = document.querySelector(`button[onclick*="${apiEndpoint}"]`).closest('.table-container').querySelector('table');
+                        const tbody = table.querySelector('tbody');
+                        Array.from(tbody.getElementsByTagName('tr')).forEach(row => {
+                            const deleteButton = row.querySelector('.delete-button');
+                            if (deleteButton && deleteButton.getAttribute('onclick').includes(`${id1}`) && (id2 === null || deleteButton.getAttribute('onclick').includes(`${id2}`))) {
+                                row.remove();
+                            }
+                        });
+                    } else {
+                        alert('Erreur lors de la suppression de la donnée.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la suppression de la donnée.');
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showCategory('employeesTable', 'searchEmployees', '/api/employees');
         });
     </script>
 </body>

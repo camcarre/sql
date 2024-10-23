@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
 
-const dbPath = path.resolve(__dirname, '/Users/camcam/Documents/taffpro/sql/sql/back/employees.db');
+const dbPath = path.resolve(__dirname, '/Users/tayvadiphaisan/sql/back/employees.db');
 console.log('Chemin absolu de la base de données:', dbPath);
 
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -17,6 +18,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 app.use(express.static(path.join(__dirname, '../front')));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'index.html'));
@@ -37,6 +39,174 @@ app.get('/api/employees', (req, res) => {
             return;
         }
         res.json(rows);
+    });
+});
+
+app.get('/api/departments', (req, res) => {
+    const sql = `
+        SELECT departmentId, department_name, manager_id
+        FROM departments
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/api/titles', (req, res) => {
+    const sql = `
+        SELECT title_id, title_name
+        FROM titles
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/api/attendance', (req, res) => {
+    const sql = `
+        SELECT attendance_id, employee_id, date, status, clock_in_time, clock_out_time
+        FROM attendance
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/api/performance_reviews', (req, res) => {
+    const sql = `
+        SELECT review_id, employee_id, review_date, reviewer_id, rating, comments
+        FROM performance_reviews
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/api/benefits', (req, res) => {
+    const sql = `
+        SELECT benefit_id, benefit_name, description
+        FROM benefits
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.get('/api/employee_benefits', (req, res) => {
+    const sql = `
+        SELECT employee_id, benefit_id, start_date, end_date
+        FROM employee_benefits
+    `;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+app.delete('/api/employees/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM employees WHERE employee_id = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Employé supprimé avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/departments/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM departments WHERE departmentId = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Département supprimé avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/titles/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM titles WHERE title_id = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Titre supprimé avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/attendance/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM attendance WHERE attendance_id = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Présence supprimée avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/performance_reviews/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM performance_reviews WHERE review_id = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Évaluation de performance supprimée avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/benefits/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM benefits WHERE benefit_id = ?';
+    db.run(sql, id, function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Bénéfice supprimé avec succès!', changes: this.changes });
+    });
+});
+
+app.delete('/api/employee_benefits/:employee_id/:benefit_id', (req, res) => {
+    const { employee_id, benefit_id } = req.params;
+    const sql = 'DELETE FROM employee_benefits WHERE employee_id = ? AND benefit_id = ?';
+    db.run(sql, [employee_id, benefit_id], function(err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Bénéfice de l\'employé supprimé avec succès!', changes: this.changes });
     });
 });
 
