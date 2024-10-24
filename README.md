@@ -8,8 +8,7 @@
    - [2. NPM (Node Package Manager)](#2-npm-node-package-manager)
    - [3. Dependencies](#3-dependencies)
    - [4. Directory Structure](#4-directory-structure)
-   - [5. Database File](#5-database-file)
-   - [6. Run the Application](#6-run-the-application)
+   - [5. Run the Application](#6-run-the-application)
 
 ## Project Description 📝
 At the end of our SQL module, we were tasked to create a database interface in order to store information on a business’s employees. We were tasked to create SQL queries to extract information from the database and display it on a web page. We also used HTML and CSS concepts to create a user-friendly interface for displaying the information from the database. HTML forms to allow users to input information and send it to the database via SQL queries were used. We also created navigation pages to allow users to browse different sections of the site by clicking on buttons, all while using JavaScript concepts to add interactive features. 
@@ -60,13 +59,7 @@ At the end of our SQL module, we were tasked to create a database interface in o
         └── style.css
     ```
 
-### 5. Database File 🗃️
-- Ensure that the SQLite database file (`employees.db`) exists at the specified path in your code:
-    ```javascript
-    const dbPath = path.resolve(__dirname, '/Users/tayvadiphaisan/sql/back/employees.db');
-    ```
-
-### 6. Run The Application 🚀
+### 5. Run The Application 🚀
 - To start your server, run the following command in your terminal from the project directory where `serveur.js` is located:
     ```bash
     node serveur.js
