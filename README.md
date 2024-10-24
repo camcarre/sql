@@ -1,4 +1,26 @@
-## Requirements
+# Final SQL Project 🎯
+
+## Table of Contents 📚
+
+1. [Project Description](#project-description)
+2. [Requirements](#requirements)
+   - [1. Node.js](#1-nodejs)
+   - [2. NPM (Node Package Manager)](#2-npm-node-package-manager)
+   - [3. Dependencies](#3-dependencies)
+   - [4. Directory Structure](#4-directory-structure)
+   - [5. Database File](#5-database-file)
+   - [6. Run the Application](#6-run-the-application)
+
+## Project Description 📝
+At the end of our SQL module, we were tasked to create a database interface in order to store information on a business’s employees. We were tasked to create SQL queries to extract information from the database and display it on a web page. We also used HTML and CSS concepts to create a user-friendly interface for displaying the information from the database. HTML forms to allow users to input information and send it to the database via SQL queries were used. We also created navigation pages to allow users to browse different sections of the site by clicking on buttons, all while using JavaScript concepts to add interactive features. 
+
+**Technologies used:**
+- SQLite3 🗄️
+- JavaScript 💻
+- HTML 🌐
+- CSS 🎨
+
+## Requirements ⚙️
 
 ### 1. Node.js 🟢
 - Ensure you have Node.js installed on your machine. You can download it from the [Node.js official website](https://nodejs.org/).
