@@ -222,7 +222,7 @@ app.post('/api/employees', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.json({ message: 'Employé ajouté avec succès!', id: this.lastID });
+        res.json({ message: 'Employé ajouté avec succès!', id: this.lastID }); // this.lastID returns the new employee_id
     });
 });
 
@@ -232,10 +232,9 @@ app.post('/api/departments', (req, res) => {
 
     db.run(sql, [department_name, manager_id], function(err) {
         if (err) {
-            res.status(400).json({ error: err.message });
-            return;
+            return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Department added successfully!', id: this.lastID });
+        res.status(201).json({ message: 'Départment ajouté avec succès!', id: this.lastID }); // this.lastID returns the new departmentId
     });
 });
 
@@ -245,10 +244,9 @@ app.post('/api/titles', (req, res) => {
 
     db.run(sql, [title_name], function(err) {
         if (err) {
-            res.status(400).json({ error: err.message });
-            return;
+            return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Title added successfully!', id: this.lastID });
+        res.status(201).json({ message: 'Titre ajouté avec succès!', id: this.lastID }); // this.lastID returns the new title_id
     });
 });
 
@@ -258,10 +256,9 @@ app.post('/api/benefits', (req, res) => {
 
     db.run(sql, [benefit_name, description], function(err) {
         if (err) {
-            res.status(400).json({ error: err.message });
-            return;
+            return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Benefit added successfully!', id: this.lastID });
+        res.status(201).json({ message: 'Bénéfices ajouté avec succès!', id: this.lastID }); // this.lastID returns the new benefit_id
     });
 });
 
@@ -272,12 +269,12 @@ app.post('/api/performance_reviews', (req, res) => {
 
     db.run(sql, [employee_id, review_date, reviewer_id, rating, comments], function(err) {
         if (err) {
-            res.status(400).json({ error: err.message });
-            return;
+            return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Performance review added successfully!', id: this.lastID });
+        res.status(201).json({ message: 'Avis de performance ajouté avec succès!', id: this.lastID }); // this.lastID returns the new review_id
     });
 });
+
 
 // serve
 
