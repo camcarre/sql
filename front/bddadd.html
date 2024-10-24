@@ -3,84 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter des données</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .navbar {
-            display: flex;
-            justify-content: center;
-            background-color: #007bff;
-            padding: 10px;
-        }
-        .navbar button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .navbar button:hover {
-            background-color: #0056b3;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 60px);
-            margin-top: 20px; /* Ajouter une marge entre la navbar et le formulaire */
-        }
-        .form-container {
-            width: 100%;
-            max-width: 800px; /* Agrandir le formulaire */
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        form {
-            display: none; /* Masquer les formulaires par défaut */
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button[type="submit"] {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button[type="submit"]:hover {
-            background-color: #218838;
-        }
-        .navbar .back-button {
-            color: #dc3545;
-        }
-        .back-button:hover {
-            background-color: #0056b3;
-        }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="bddadd.css">
+    <title>Ajouter des données</title> 
+
 </head>
 <body>
     <div class="navbar">
@@ -93,20 +18,20 @@
     </div>
     <div class="container">
         <div class="form-container">
-            <form id="employeeForm">
+            <form id="employeeForm" style="display: block;">  
                 <h2>Ajouter un employé</h2>
                 <label for="lastName">Nom:</label>
                 <input type="text" id="lastName" name="lastName" required>
-
+    
                 <label for="firstName">Prénom:</label>
                 <input type="text" id="firstName" name="firstName" required>
-
+    
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-
+    
                 <label for="phone_number">Téléphone:</label>
                 <input type="text" id="phone_number" name="phone_number" required>
-
+    
                 <label for="departmentId">Département:</label>
                 <select id="departmentId" name="departmentId" required>
                     <option value="">Sélectionnez un département</option>
@@ -116,26 +41,26 @@
                     <option value="4">Ventes</option>
                     <option value="5">Finance</option>
                 </select>
-
+    
                 <label for="title_id">Titre:</label>
                 <input type="text" id="title_id" name="title_id" required>
-
+    
                 <label for="hire_date">Date d'embauche:</label>
                 <input type="date" id="hire_date" name="hire_date" required>
-
+    
                 <label for="salary">Salaire:</label>
                 <input type="number" id="salary" name="salary" required>
-
+    
                 <label for="address">Adresse:</label>
                 <input type="text" id="address" name="address" required>
-
+    
                 <label for="date_of_birth">Date de naissance:</label>
                 <input type="date" id="date_of_birth" name="date_of_birth" required>
-
+    
                 <button type="submit">Ajouter</button>
             </form>
 
-            <form id="departmentForm">
+            <form id="departmentForm" style="display: none;">
                 <h2>Ajouter un département</h2>
                 <label for="department_name">Nom du département:</label>
                 <input type="text" id="department_name" name="department_name" required>
@@ -146,7 +71,7 @@
                 <button type="submit">Ajouter</button>
             </form>
 
-            <form id="titleForm">
+            <form id="titleForm" style="display: none;">
                 <h2>Ajouter un titre</h2>
                 <label for="title_name">Nom du titre:</label>
                 <input type="text" id="title_name" name="title_name" required>
@@ -154,7 +79,7 @@
                 <button type="submit">Ajouter</button>
             </form>
 
-            <form id="benefitForm">
+            <form id="benefitForm" style="display: none;">
                 <h2>Ajouter un bénéfice</h2>
                 <label for="benefit_name">Nom du bénéfice:</label>
                 <input type="text" id="benefit_name" name="benefit_name" required>
@@ -165,7 +90,7 @@
                 <button type="submit">Ajouter</button>
             </form>
 
-            <form id="performanceReviewForm">
+            <form id="performanceReviewForm" style="display: none;">
                 <h2>Ajouter une évaluation de performance</h2>
                 <label for="employee_id">ID de l'employé:</label>
                 <input type="number" id="employee_id" name="employee_id" required>
@@ -186,20 +111,19 @@
             </form>
         </div>
     </div>
-    <div class="footer">
-        <a href="/" class="back-button">Back to Home</a>
-    </div>
 
     <script>
+        // display form
         function showForm(formId) {
             const forms = document.querySelectorAll('form');
-            forms.forEach(form => form.style.display = 'none');
+            forms.forEach(form => form.style.display = 'none'); 
 
             if (formId) {
-                document.getElementById(formId).style.display = 'block';
+                document.getElementById(formId).style.display = 'block'; 
             }
         }
 
+        // handle form data
         function handleFormSubmit(event, formId, apiEndpoint) {
             event.preventDefault();
             const form = document.getElementById(formId);
