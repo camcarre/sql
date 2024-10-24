@@ -62,7 +62,7 @@ At the end of our SQL module, we were tasked to create a database interface in o
 ### 5. Run The Application 🚀
 - To start your server, run the following command in your terminal from the project directory where `serveur.js` is located:
     ```bash
-    node serveur.js
+    node back/serveur.js
     ```
 - You should see:
     ```
