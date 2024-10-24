@@ -11,7 +11,6 @@
         <button onclick="showCategory('employeesTable', 'searchEmployees', '/api/employees')">Employés</button>
         <button onclick="showCategory('departmentsTable', 'searchDepartments', '/api/departments')">Départements</button>
         <button onclick="showCategory('titlesTable', 'searchTitles', '/api/titles')">Titres</button>
-        <button onclick="showCategory('attendanceTable', 'searchAttendance', '/api/attendance')">Présence</button>
         <button onclick="showCategory('performanceReviewsTable', 'searchPerformanceReviews', '/api/performance_reviews')">Évaluations de performance</button>
         <button onclick="showCategory('benefitsTable', 'searchBenefits', '/api/benefits')">Bénéfices</button>
         <button onclick="showCategory('employeeBenefitsTable', 'searchEmployeeBenefits', '/api/employee_benefits')">Bénéfices des employés</button>
@@ -20,7 +19,6 @@
 
     <div class="container">
         <div class="table-container">
-            <!-- employees -->
             <div class="search-container" id="searchEmployees">
                 <input type="text" onkeyup="filterTable('employeesTable', 'searchEmployees')" placeholder="Rechercher dans les employés...">
             </div>
@@ -42,11 +40,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- employee data -->
                 </tbody>
             </table>
 
-            <!-- departments -->
             <div class="search-container" id="searchDepartments">
                 <input type="text" onkeyup="filterTable('departmentsTable', 'searchDepartments')" placeholder="Rechercher dans les départements...">
             </div>
@@ -60,11 +56,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- department data -->
                 </tbody>
             </table>
 
-            <!-- titres -->
             <div class="search-container" id="searchTitles">
                 <input type="text" onkeyup="filterTable('titlesTable', 'searchTitles')" placeholder="Rechercher dans les titres...">
             </div>
@@ -77,32 +71,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- titles data -->
                 </tbody>
             </table>
 
-            <!-- présence -->
-            <div class="search-container" id="searchAttendance">
-                <input type="text" onkeyup="filterTable('attendanceTable', 'searchAttendance')" placeholder="Rechercher dans la présence...">
-            </div>
-            <table id="attendanceTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID de l'employé</th>
-                        <th>Date</th>
-                        <th>Statut</th>
-                        <th>Heure d'arrivée</th>
-                        <th>Heure de départ</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- attendance data -->
-                </tbody>
-            </table>
-
-            <!-- évaluations de performance -->
             <div class="search-container" id="searchPerformanceReviews">
                 <input type="text" onkeyup="filterTable('performanceReviewsTable', 'searchPerformanceReviews')" placeholder="Rechercher dans les évaluations...">
             </div>
@@ -119,11 +90,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- performance reviews data -->
                 </tbody>
             </table>
 
-            <!-- bénéfices -->
             <div class="search-container" id="searchBenefits">
                 <input type="text" onkeyup="filterTable('benefitsTable', 'searchBenefits')" placeholder="Rechercher dans les bénéfices...">
             </div>
@@ -137,11 +106,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- benefits data -->
                 </tbody>
             </table>
 
-            <!-- bénéfices des employés -->
             <div class="search-container" id="searchEmployeeBenefits">
                 <input type="text" onkeyup="filterTable('employeeBenefitsTable', 'searchEmployeeBenefits')" placeholder="Rechercher dans les bénéfices des employés...">
             </div>
@@ -156,13 +123,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- employee benefits data -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- js script pour affichage -->
     <script>
         function showCategory(tableId, searchId, apiEndpoint) {
             const tables = document.querySelectorAll('table');
@@ -177,7 +142,6 @@
             const tableBody = document.querySelector(`#${tableId} tbody`);
             tableBody.innerHTML = '';
 
-            // fetch data
             fetch(apiEndpoint)
                 .then(response => {
                     if (!response.ok) {
@@ -216,16 +180,6 @@
                                 <td>${item.title_name}</td>
                                 <td><button class="delete-button" onclick="deleteRow('/api/titles', ${item.title_id})">Supprimer</button></td>
                             `;
-                        } else if (tableId === 'attendanceTable') {
-                            row.innerHTML = `
-                                <td>${item.attendance_id}</td>
-                                <td>${item.employee_id}</td>
-                                <td>${item.date}</td>
-                                <td>${item.status}</td>
-                                <td>${item.clock_in_time}</td>
-                                <td>${item.clock_out_time}</td>
-                                <td><button class="delete-button" onclick="deleteRow('/api/attendance', ${item.attendance_id})">Supprimer</button></td>
-                            `;
                         } else if (tableId === 'performanceReviewsTable') {
                             row.innerHTML = `
                                 <td>${item.review_id}</td>
@@ -261,7 +215,6 @@
                 });
         }
 
-        // filter table
         function filterTable(tableId, searchInputId) {
             const input = document.getElementById(searchInputId).querySelector('input');
             const filter = input.value.toLowerCase();
@@ -281,7 +234,6 @@
             }
         }
 
-        // delete from backend
         function deleteRow(apiEndpoint, id1, id2 = null) {
             let url = '';
             if (id2 !== null) {

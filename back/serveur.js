@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-const dbPath = path.resolve(__dirname, '/Users/tayvadiphaisan/sql/back/employees.db');
+const dbPath = path.resolve(__dirname, 'employees.db');
 console.log('Chemin absolu de la base de données:', dbPath);
 
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -20,7 +20,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
 app.use(express.static(path.join(__dirname, '../front')));
 app.use(bodyParser.json());
 
-// get
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'index.html'));
 });
@@ -61,20 +60,6 @@ app.get('/api/titles', (req, res) => {
     const sql = `
         SELECT title_id, title_name
         FROM titles
-    `;
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            res.status(400).json({ error: err.message });
-            return;
-        }
-        res.json(rows);
-    });
-});
-
-app.get('/api/attendance', (req, res) => {
-    const sql = `
-        SELECT attendance_id, employee_id, date, status, clock_in_time, clock_out_time
-        FROM attendance
     `;
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -127,8 +112,6 @@ app.get('/api/employee_benefits', (req, res) => {
     });
 });
 
-// delete
-
 app.delete('/api/employees/:id', (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM employees WHERE employee_id = ?';
@@ -162,18 +145,6 @@ app.delete('/api/titles/:id', (req, res) => {
             return;
         }
         res.json({ message: 'Titre supprimé avec succès!', changes: this.changes });
-    });
-});
-
-app.delete('/api/attendance/:id', (req, res) => {
-    const { id } = req.params;
-    const sql = 'DELETE FROM attendance WHERE attendance_id = ?';
-    db.run(sql, id, function(err) {
-        if (err) {
-            res.status(400).json({ error: err.message });
-            return;
-        }
-        res.json({ message: 'Présence supprimée avec succès!', changes: this.changes });
     });
 });
 
@@ -213,7 +184,6 @@ app.delete('/api/employee_benefits/:employee_id/:benefit_id', (req, res) => {
     });
 });
 
-// post 
 app.post('/api/employees', (req, res) => {
     const { lastName, firstName, email, phone_number, departmentId, title_id, hire_date, salary, address, date_of_birth } = req.body;
     const sql = `INSERT INTO employees (lastName, firstName, email, phone_number, departmentId, title_id, hire_date, salary, address, date_of_birth)
@@ -222,7 +192,7 @@ app.post('/api/employees', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.json({ message: 'Employé ajouté avec succès!', id: this.lastID }); // this.lastID returns the new employee_id
+        res.json({ message: 'Employé ajouté avec succès!', id: this.lastID }); 
     });
 });
 
@@ -234,7 +204,7 @@ app.post('/api/departments', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Départment ajouté avec succès!', id: this.lastID }); // this.lastID returns the new departmentId
+        res.status(201).json({ message: 'Départment ajouté avec succès!', id: this.lastID });
     });
 });
 
@@ -246,7 +216,7 @@ app.post('/api/titles', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Titre ajouté avec succès!', id: this.lastID }); // this.lastID returns the new title_id
+        res.status(201).json({ message: 'Titre ajouté avec succès!', id: this.lastID });
     });
 });
 
@@ -258,7 +228,7 @@ app.post('/api/benefits', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Bénéfices ajouté avec succès!', id: this.lastID }); // this.lastID returns the new benefit_id
+        res.status(201).json({ message: 'Bénéfices ajouté avec succès!', id: this.lastID });
     });
 });
 
@@ -271,12 +241,9 @@ app.post('/api/performance_reviews', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.status(201).json({ message: 'Avis de performance ajouté avec succès!', id: this.lastID }); // this.lastID returns the new review_id
+        res.status(201).json({ message: 'Avis de performance ajouté avec succès!', id: this.lastID });
     });
 });
-
-
-// serve
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

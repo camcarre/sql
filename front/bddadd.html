@@ -113,7 +113,6 @@
     </div>
 
     <script>
-        // display form
         function showForm(formId) {
             const forms = document.querySelectorAll('form');
             forms.forEach(form => form.style.display = 'none'); 
@@ -123,7 +122,6 @@
             }
         }
 
-        // handle form data
         function handleFormSubmit(event, formId, apiEndpoint) {
             event.preventDefault();
             const form = document.getElementById(formId);

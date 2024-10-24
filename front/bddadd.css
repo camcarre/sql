@@ -7,10 +7,10 @@ body {
 
 .navbar {
     display: flex;
-    justify-content: center; /* Center the navbar content */
+    justify-content: center;
     background-color: #007bff;
     padding: 10px;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    flex-wrap: wrap; 
 }
 
 .navbar button, .navbar .back-button {
@@ -41,8 +41,8 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Align items at the top */
+    align-items: center;
+    justify-content: flex-start; 
     padding: 20px;
     margin-top: 20px; 
 }
